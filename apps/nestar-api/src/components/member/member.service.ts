@@ -16,8 +16,8 @@ export class MemberService {
       return result
 
     }catch(err){
-      console.log("error", err)
-      throw new BadRequestException(err)
+      console.log("error", err.message)
+      throw new BadRequestException(Message.USED_MEMBER_NICK_OR_PHONE)
 
     }
     

@@ -1,16 +1,9 @@
-function printNumbers(): void {
-    let number: number = 1;
-    const intervalId: NodeJS.Timeout = setInterval(() => {
-        console.log(number);
-        number++;
-
-        if (number > 5) {
-            clearInterval(intervalId);
-        }
-    }, 1000); 
+function reverseInteger(num: number): number {
+    const reversedNumber = parseInt(num.toString().split('').reverse().join(''), 10);
+    return Math.sign(num) * reversedNumber;
 }
 
-printNumbers();
+console.log(reverseInteger(123456789)); 
+console.log(reverseInteger(-123456789)); 
 
-console.log("working")
 

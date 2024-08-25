@@ -36,10 +36,6 @@ export class MemberResolver {
       console.log("Mutation: signup")
       console.log("Input ", input)
       return this.memberService.login(input);
-
-
-      
-
     }catch(err){
       console.log("error, Signup",err)
       throw new InternalServerErrorException(err)
@@ -47,7 +43,7 @@ export class MemberResolver {
   }
 
   @UseGuards(AuthGuard)
-  @Mutation(() => String)
+  @Query(() => String)
   public async checkAuth(@AuthMember("memberNick") memberNick: string): Promise<string> {
     console.log('Mutation: checkAuth');
     console.log(memberNick)
@@ -62,10 +58,12 @@ export class MemberResolver {
     return this.memberService.updateMember();
   }
 
+  
+
 
   @Roles(MemberType.USER, MemberType.AGENT)
   @UseGuards(RolesGuard)
-  @Mutation(() => String)
+  @Query(() => String)
   public async checkAuthRoles(@AuthMember() authmember: Member): Promise<string> {
     console.log('Mutation: checkAuthRoles');
     console.log(authmember)
@@ -85,12 +83,13 @@ export class MemberResolver {
 @UseGuards(RolesGuard)
 @Mutation(() => String)
 public async getAllMembersByAdmin(@AuthMember() authMember: Member): Promise<string> {
-  console.log(authMember)
+  console.log(authMember.memberType )
     return this.memberService.getAllMembersByAdmin();
 }
 
 @Mutation(() => String)
 public async updateMemberByAdmin(): Promise<string> {
+  
     console.log('Mutation: updateMemberByAdmin');
     return this.memberService.updateMemberByAdmin();
 }

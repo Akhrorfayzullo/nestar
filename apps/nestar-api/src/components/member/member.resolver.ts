@@ -9,6 +9,9 @@ import { ObjectId } from 'mongoose';
 import { Roles } from '../auth/decorators/roles.decorator';
 import { MemberType } from '../../libs/enums/member.enum';
 import { RolesGuard } from '../auth/guards/roles.guard';
+import { MemberUpdate } from '../../libs/dto/member.update';
+import { shapeIntoMongoObjectId } from '../../libs/config';
+import { WithoutGuard } from '../auth/guards/without.guard';
 
 @Resolver()
 export class MemberResolver {
@@ -51,11 +54,11 @@ export class MemberResolver {
   }
 
   @UseGuards(AuthGuard)
-  @Mutation(() => String)
-  public async updateMember(@AuthMember("_id") memberId: ObjectId): Promise<string> {
+  @Mutation(() => Member)
+  public async updateMember(@Args("input") input: MemberUpdate,@AuthMember("_id") memberId: ObjectId): Promise<Member> {
     console.log('Mutation: updateMember');
-    console.log(memberId)
-    return this.memberService.updateMember();
+    delete input._id;
+    return this.memberService.updateMember(memberId, input);
   }
 
   
@@ -71,11 +74,12 @@ export class MemberResolver {
   }
 
   
-
-  @Query(() => String)
-  public async getMember(): Promise<string> {
+  @UseGuards(WithoutGuard)
+  @Query(() => Member)
+  public async getMember(@Args('memberId') input: string, @AuthMember("_id") memberId: ObjectId): Promise<Member> {
     console.log('Query: getMember');
-    return this.memberService.getMember();
+    const targetId = shapeIntoMongoObjectId(input);
+    return this.memberService.getMember(memberId, targetId);
   }
 
   /** ADMIN **/

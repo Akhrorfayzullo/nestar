@@ -1,14 +1,20 @@
-function rotateArray(arr: number[], index: number): number[] {
-    if (index < 0 || index >= arr.length) {
-        throw new Error("Invalid index");
+function areArraysEqual<T>(arr1: T[], arr2: T[]): boolean {
+    if (arr1.length !== arr2.length) return false;
+
+    const sortedArr1 = arr1.slice().sort();
+    const sortedArr2 = arr2.slice().sort();
+
+    for (let i = 0; i < sortedArr1.length; i++) {
+        if (sortedArr1[i] !== sortedArr2[i]) {
+            return false;
+        }
     }
 
-    const rotatedPart = arr.slice(-index);
-    const remainingPart = arr.slice(0, -index);
-    
-    return rotatedPart.concat(remainingPart);
+    return true;
 }
 
-console.log(rotateArray([1, 2, 3, 4, 5, 6], 2)); 
+console.log(areArraysEqual([1, 2, 3], [3, 1, 2])); 
+console.log(areArraysEqual([1, 2, 3], [3, 1, 2, 1])); 
+
 
 

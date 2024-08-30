@@ -61,7 +61,7 @@ export class PropertyInput {
   propertyRent?: boolean;
 
   memberId?: ObjectId
-  //efe
+  
 
   @IsOptional()
   @Field(() => Date, { nullable: true })

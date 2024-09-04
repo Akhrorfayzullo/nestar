@@ -2,7 +2,17 @@ import { ObjectId } from "bson"
 
 export const availableAgentsSort = ["createdAt", "updatedAt", "memberLikes", "memberViews", "memberRank"]
 
-export const availableMembersSort = ["createdAt", "updatedAt", "memberLikes", "memberViews"]
+export const availableMembersSort = ["createdAt", "updatedAt", "memberLikes", "memberViews"];
+
+export const availableOptions = ['propertyBarter', 'propertyRent'];
+export const availablePropertySorts = [
+    'createdAt',
+    'updatedAt',
+    'propertyLikes',
+    'propertyViews',
+    'propertyRank',
+    'propertyPrice',
+];
 
  // IMAGE CONFIGURATION (config.js)
  import { v4 as uuidv4 } from 'uuid';
@@ -17,3 +27,12 @@ export const availableMembersSort = ["createdAt", "updatedAt", "memberLikes", "m
 export const shapeIntoMongoObjectId = (target: any) => {
     return typeof target === "string" ? new ObjectId(target) : target
 }
+
+export const lookupMember = {
+    $lookup: {
+        from: 'members',
+        localField: 'memberId',
+        foreignField: '_id',
+        as: 'memberData',
+    }
+};

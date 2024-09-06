@@ -1,20 +1,21 @@
-function areArraysEqual<T>(arr1: T[], arr2: T[]): boolean {
-    if (arr1.length !== arr2.length) return false;
+function findDuplicates(arr: number[]): number[] {
+	const elementCount: { [key: number]: number } = {};
+	const duplicates: number[] = [];
 
-    const sortedArr1 = arr1.slice().sort();
-    const sortedArr2 = arr2.slice().sort();
+	for (const num of arr) {
+		elementCount[num] = (elementCount[num] || 0) + 1;
+	}
 
-    for (let i = 0; i < sortedArr1.length; i++) {
-        if (sortedArr1[i] !== sortedArr2[i]) {
-            return false;
-        }
-    }
+	for (const num in elementCount) {
+		if (elementCount[num] > 1) {
+			duplicates.push(Number(num));
+		}
+	}
 
-    return true;
+	return duplicates;
 }
 
-console.log(areArraysEqual([1, 2, 3], [3, 1, 2])); 
-console.log(areArraysEqual([1, 2, 3], [3, 1, 2, 1])); 
+console.log(findDuplicates([1, 2, 3, 4, 5, 4, 3, 4]));
 
 
 

@@ -6,6 +6,7 @@ import { AuthModule } from '../auth/auth.module';
 import { ViewModule } from '../view/view.module';
 import { MemberModule } from '../member/member.module';
 import { MongooseModule } from '@nestjs/mongoose';
+import { LikeModule } from '../like/like.module';
 
 @Module({
   imports: [
@@ -18,6 +19,7 @@ import { MongooseModule } from '@nestjs/mongoose';
     AuthModule,
     ViewModule,
     MemberModule,
+    LikeModule,
   ],
   providers: [BoardArticleResolver, BoardArticleService],
   exports: [BoardArticleService],

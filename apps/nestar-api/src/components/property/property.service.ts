@@ -2,7 +2,7 @@ import { BadRequestException, Injectable, InternalServerErrorException } from '@
 import { InjectModel } from '@nestjs/mongoose';
 import { Model, ObjectId, Schema } from 'mongoose';
 import { Properties, Property } from '../../libs/dto/property/property';
-import { AgentPropertiesInquiry, AllPropertiesInquiry, PropertiesInquiry, PropertyInput } from '../../libs/dto/property/property.input';
+import { AgentPropertiesInquiry, AllPropertiesInquiry, OrdinaryInquiry, PropertiesInquiry, PropertyInput } from '../../libs/dto/property/property.input';
 import { Direction, Message } from '../../libs/enums/common.enum';
 import { MemberService } from '../member/member.service';
 import { ViewService } from '../view/view.service';
@@ -279,6 +279,14 @@ public async updatePropertyByAdmin(input: PropertyUpdate): Promise<Property> {
   }
 
   return result;
+}
+
+public async getFavorites(memberId: ObjectId, input: OrdinaryInquiry): Promise<Properties> {
+  return await this.likeService.getFavoriteProperties(memberId, input);
+}
+
+public async getVisited(memberId: ObjectId, input: OrdinaryInquiry): Promise<Properties> {
+  return await this.viewService.getVisitedProperties(memberId, input);
 }
 
 public async removePropertyByAdmin(propertyId: ObjectId): Promise<Property> {

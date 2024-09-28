@@ -77,7 +77,7 @@ const MemberSchema = new Schema({
         type: Number,
         default: 0,
     },
-    memberRanks:{
+    memberRank:{
         type: Number,
         default: 0,
     },
@@ -85,7 +85,7 @@ const MemberSchema = new Schema({
         type: Number,
         default: 0,
     },
-    memberBloks:{
+    memberBlocks:{
         type: Number,
         default: 0,
     },

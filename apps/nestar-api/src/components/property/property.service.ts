@@ -138,6 +138,9 @@ public async getProperties(memberId: ObjectId, input: PropertiesInquiry): Promis
       ])
       .exec();
   if (!result.length) throw new InternalServerErrorException(Message.NO_DATA_FOUND);
+  console.log(result[0])
+  console.log("result")
+  
 
   return result[0];
 }
@@ -156,10 +159,10 @@ private shapeMatchQuery (match: T, input: PropertiesInquiry): void {
   text,
   } = input.search;
   if (memberId) match.memberId = shapeIntoMongoObjectId (memberId);
-  if (locationList) match.propertyLocation = { $in: locationList };
-  if (roomsList) match.propertyRooms = { $in: roomsList };
-  if (bedsList) match.propertyBeds = { $in: bedsList };
-  if (typeList) match.propertyType = { $in: typeList };
+  if (locationList && locationList.length) match.propertyLocation = { $in: locationList };
+  if (roomsList && roomsList.length) match.propertyRooms = { $in: roomsList };
+  if (bedsList && bedsList.length) match.propertyBeds = { $in: bedsList };
+  if (typeList && typeList.length) match.propertyType = { $in: typeList };
 
   if (pricesRange) match.propertyPrice = {$gte: pricesRange.start, $lte: pricesRange.end };
   if (periodsRange) match.createdAt = {$gte: periodsRange.start, $lte: periodsRange.end };
